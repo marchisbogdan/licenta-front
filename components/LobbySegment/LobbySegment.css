@@ -1,0 +1,118 @@
+@media only screen and (max-width: 768px){
+    .content {
+        padding: 0 0;
+        font-size: 12px;
+    }
+    .pathName{
+        display: flex;
+        width: 100%;
+        height: 30px;
+        background: #4E41B7;
+        color: #C1BDDB;
+        justify-content: center;
+        align-items: center;
+        line-height: 30px;
+        font-size: 18px;
+    }
+    .competition_name{
+        padding: 0px 8px;
+    }
+    .competitions_detailes_container{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-between;
+        padding: 10px 0px;
+    }
+    .competition_detail{
+        
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 100px;
+    left                       : 10px;
+    right                      : 10px;
+    bottom                     : 10px;
+    border                     : 1px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 300px;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .content {
+        padding: 0 0;
+    }
+    .pathName{
+        display: flex;
+        width: 100%;
+        height: 50px;
+        background: #4E41B7;
+        color: #C1BDDB;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-size: 21px;
+    }
+    .competition_name{
+        padding: 16px 16px;
+        margin: 0 0;
+    }
+    .competitions_detailes_container{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-between;
+        padding: 10px 0px;
+    }
+    .competition_detail{
+
+    }
+    .overview :hover{
+        background: #E4E4E4;
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 200px;
+    left                       : 40px;
+    right                      : 40px;
+    bottom                     : 40px;
+    border                     : 3px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 400px;
+    }
+}
+
+.spinnerContainer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.competition_container{
+    border-bottom: 1px solid black;
+}
+
+.informationOverlayModal, .informationOverlayModal_after_open , .informationOverlayModal_before_close{
+    position          : fixed;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color   : #3B4DC6;
+    z-index: 1;
+    transition: width 2s, height 4s;
+    animation: fadeinout 5s linear forwards;
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  25%,50%,75% { opacity: 1 };
+}

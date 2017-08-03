@@ -1,0 +1,6 @@
+{
+    "name":"TeamSegment",
+    "version":"0.0.0",
+    "private":true,
+    "main": "./TeamSegment.js"
+}

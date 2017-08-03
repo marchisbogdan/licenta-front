@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/error</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/about</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/intro</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/sign-up</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/sign-in</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/password-recovery</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/lobby</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/entries</loc>
+  </url>
+  <url>
+    <loc>http://uat-wahoo.eu-west-1.elasticbeanstalk.com/team</loc>
+  </url>
+</urlset>

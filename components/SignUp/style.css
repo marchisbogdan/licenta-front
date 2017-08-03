@@ -1,0 +1,147 @@
+@media only screen and (max-width: 768px){
+    .content {
+        padding: 0 16px 0 16px;
+    }
+    .checkbox{
+        display: inline-block;
+        width: 40%;
+    }
+    .link{
+        display: inline-block;
+        width: 40%;
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 100px;
+    left                       : 10px;
+    right                      : 10px;
+    bottom                     : 10px;
+    border                     : 1px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 300px;
+    }
+
+    .bottomPosition{
+    position: absolute;
+    bottom: 0px;
+    width: 80%;
+    padding: 20px;
+}
+}
+
+@media only screen and (min-width: 768px){
+    .content {
+        padding: 0 16px 0 16px;
+    }
+    .checkbox{
+        display: inline-block;
+        width: 20%;
+    }
+    .link{
+        display: inline-block;
+        width: 20%;
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 200px;
+    left                       : 40px;
+    right                      : 40px;
+    bottom                     : 40px;
+    border                     : 3px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 400px;
+    }
+    .bottomPosition{
+    position: absolute;
+    bottom: 0px;
+    width: 90%;
+    padding: 20px;
+    }
+}
+
+.informationOverlayModal, .informationOverlayModal_after_open , .informationOverlayModal_before_close{
+    position          : fixed;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color   : #3B4DC6;
+    z-index: 1;
+    transition: width 2s, height 4s;
+    animation: fadeinout 5s linear forwards;
+}
+
+.selector{
+    overflow: hidden;
+}
+
+.centerAlign{
+    text-align: center;
+}
+
+.mainLogo{
+    text-align: center;
+    width: 100%;
+    height: 64px;
+}
+
+.buttonsContainer{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.logoImg {
+    display: inline-block;
+    width:32px;
+    height:32px;
+}
+
+.loginOverlay{
+    display: block;
+    width:100%;
+    padding-bottom: 20px;
+}
+
+.loginOptions{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.inputs{
+    
+}
+
+select {
+   border: 0;
+   color: #391515;
+   background: transparent;
+   font-size: 18px;
+   font-weight: bold;
+   padding: 2px 10px;
+   width: 300px;
+   -webkit-appearance: none;
+}
+
+.selector {
+   overflow:hidden;
+   width:300px;
+   border-radius: 9px 9px 9px 9px;
+   box-shadow: 1px 1px 10px #330033;
+   background: #DADADA url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 269px center;
+}
+
+.errorMessage {
+    font-size: 14px;
+    color:#DB1010;
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  25%,50%,75% { opacity: 1 };
+}

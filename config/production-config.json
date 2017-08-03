@@ -1,0 +1,5 @@
+{
+    "wahooHost":"http://uat-wahoo.eu-west-1.elasticbeanstalk.com",
+    "wahooSubscriberApi":"http://uat-wahoo.eu-west-1.elasticbeanstalk.com",
+    "wahooApi":"http://localhost:8093"
+}

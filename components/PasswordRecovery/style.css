@@ -1,0 +1,100 @@
+@media only screen and (max-width: 768px){
+    .content {
+        padding: 0 16px 0 16px;
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 100px;
+    left                       : 10px;
+    right                      : 10px;
+    bottom                     : 10px;
+    border                     : 1px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 300px;
+    }
+
+    .bottomPosition{
+    position: absolute;
+    bottom: 0px;
+    width: 80%;
+    padding: 20px;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .content {
+        padding: 0 16px 0 16px;
+    }
+
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 200px;
+    left                       : 40px;
+    right                      : 40px;
+    bottom                     : 40px;
+    border                     : 3px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 400px;
+    }
+    .bottomPosition{
+    position: absolute;
+    bottom: 0px;
+    width: 90%;
+    padding: 20px;
+    }
+}
+
+
+.informationOverlayModal, .informationOverlayModal_after_open , .informationOverlayModal_before_close{
+    position          : fixed;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color   : #3B4DC6;
+    z-index: 1;
+    transition: width 2s, height 4s;
+    animation: fadeinout 5s linear forwards;
+}
+.centerAlign{
+    text-align: center;
+}
+
+.mainLogo{
+    text-align: center;
+    width: 100%;
+    height: 64px;
+}
+
+.buttonsContainer{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.logoImg {
+    display: inline-block;
+    width:32px;
+    height:32px;
+}
+
+.loginOverlay{
+    display: block;
+    width:100%;
+    padding-bottom: 20px;
+}
+
+.loginOptions{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  25%,50%,75% { opacity: 1 };
+}

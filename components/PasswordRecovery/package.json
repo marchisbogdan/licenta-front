@@ -1,0 +1,6 @@
+{
+  "name": "PasswordRecovery",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PasswordRecovery.js"
+}

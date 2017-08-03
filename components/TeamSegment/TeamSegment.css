@@ -1,0 +1,204 @@
+@media only screen and (max-width: 768px){
+    .content {
+        padding: 0 0;
+        font-size: 12px;
+    }
+    .pathName{
+        display: flex;
+        width: 100%;
+        height: 30px;
+        background: #4E41B7;
+        color: #C1BDDB;
+        justify-content: center;
+        align-items: center;
+        line-height: 30px;
+        font-size: 18px;
+    }
+    .competition_name{
+        padding: 0px 8px;
+    }
+    .competitions_detailes_container{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-between;
+        padding: 10px 0px;
+    }
+    .competition_detail{
+        
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+        position: absolute;
+        top                        : 70px;
+        left                       : 10px;
+        right                      : 10px;
+        bottom                     : 10px;
+        border                     : 1px solid #E92525;
+        background                 : #fff;
+        overflow                   : auto;
+        outline                    : none;
+        padding                    : 20px;
+        height: 75vh;
+    }
+
+    .fieldPositions {
+        display: block;
+        width: 80%;
+        padding: 10% 5%;
+        margin: 0 auto;
+    }
+
+    .playersOverview {
+        display: block;
+        height:55vh;
+        overflow: auto;
+    }
+
+    .playerContainer{
+        display: flex;
+        font-size: 12px;
+        text-align: center;
+        justify-content: space-around;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 90%;
+        height: 80px;
+        margin: 0 auto;
+        border-bottom: 1px solid black;
+    }
+    .playerInfo {
+        width: 50%;
+        text-align: left;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .content {
+        padding: 0 0;
+    }
+    .pathName{
+        display: flex;
+        width: 100%;
+        height: 50px;
+        background: #4E41B7;
+        color: #C1BDDB;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-size: 21px;
+    }
+    .competition_name{
+        padding: 0px 16px;
+    }
+    .competitions_detailes_container{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-between;
+        padding: 10px 0px;
+    }
+    .competition_detail{
+
+    }
+    .competition_container:hover{
+        background: #DBDBDB;
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+        position: absolute;
+        top                        : 200px;
+        left                       : 40px;
+        right                      : 40px;
+        bottom                     : 40px;
+        border                     : 3px solid #E92525;
+        background                 : #fff;
+        overflow                   : auto;
+        outline                    : none;
+        padding                    : 20px;
+        height: 60vh;
+    }
+
+    .fieldPositions {
+        display: block;
+        width: 50%;
+        padding: 10% 5%;
+        margin: 0 auto;
+    }
+
+    .fieldPosition:hover {
+        box-shadow: 0 0 0 0.2em #3B4DC6;
+        transition: box-shadow 0.3s linear;
+    }
+    .playerContainer:hover{
+        background: #6773E8;
+    }
+
+    .playersOverview {
+        display: block;
+        height:45vh;
+        overflow: auto;
+    }
+    .playerContainer{
+        display: flex;
+        text-align: center;
+        justify-content: space-around;
+        align-items: center;
+        width:90%;
+        height: 40px;
+        margin: 0 auto;
+        border-bottom: 1px solid black;
+    }
+    .playerInfo {
+        width: 20%;
+        text-align: left;
+    }
+}
+
+.spinnerContainer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.competition_container{
+    border-bottom: 1px solid black;
+}
+
+.informationOverlayModal, .informationOverlayModal_after_open , .informationOverlayModal_before_close{
+    position          : fixed;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color   : #3B4DC6;
+    z-index: 1;
+}
+
+.fieldPosition {
+    border-radius: 1em 1em;
+    background: #4A41B7;
+    width: 30px;
+    height: 30px;
+}
+
+.formationLines {
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.overview{
+    padding: 16px 16px;
+}
+
+.bottomPosition {
+    display: flex;
+    display: fixed;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+}

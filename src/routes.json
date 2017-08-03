@@ -1,0 +1,47 @@
+[
+  {
+    "path": "/",
+    "page": "./intro"
+  },
+  {
+    "path": "/error",
+    "page": "./error",
+    "chunk": "main"
+  },
+  {
+    "path": "/about",
+    "page": "./about"
+  },
+  {
+    "path": "/tasks/:status(pending|completed)?",
+    "page": "./home"
+  },
+  {
+    "path": "/intro",
+    "page": "./intro"
+  },
+  {
+    "path": "/sign-up",
+    "page": "./signUp"
+  },
+  {
+    "path": "/sign-in",
+    "page": "./signIn"
+  },
+  {
+    "path": "/password-recovery",
+    "page": "./passwordRecovery"
+  },
+  {
+    "path": "/lobby",
+    "page": "./lobby"
+  },
+  {
+    "path": "/entries",
+    "page": "./entries"
+  },
+  {
+    "path": "/team",
+    "page": "./team"
+  }
+]
