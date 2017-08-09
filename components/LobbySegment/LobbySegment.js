@@ -13,13 +13,15 @@ import Carousel from "../Carousel";
 import s from "./LobbySegment.css";
 import * as virtualCompetitionsApi from "../../core/actions/virtualCompetitionApiActions";
 import * as competitorApi from "../../core/actions/competitorApiActions";
+import * as productsApi from "../../core/actions/productsActions";
 import * as reqUtil from "../../core/actions/util/request-status-util";
 import * as actions from "../../core/actions/actionTypes.js";
 
 @connect((state) =>(
     {
         virtualCompetitionsResponse: state.virtualCompetitions,
-        virtualCompetitorsResponse: state.virtualCompetitors
+        virtualCompetitorsResponse: state.virtualCompetitors,
+        productsResponse: state.products
     }
 ))
 
@@ -35,32 +37,34 @@ class LobbySegment extends React.Component {
         this.joinVirtualCompetition = this.joinVirtualCompetition.bind(this);
         this.handleModalOnAfterOpen = this.handleModalOnAfterOpen.bind(this);
         this.handleModalOnCloseRequest = this.handleModalOnCloseRequest.bind(this);
+        this.selectProduct = this.selectProduct.bind(this);
     }
 
     componentWillMount() {
         this.props.dispatch(virtualCompetitionsApi.getVirtualCompetitions());
+        this.props.dispatch(productsApi.getAllProducts());
     }
 
     componentWillReceiveProps(nextProps) {  
-        if(nextProps.virtualCompetitionsResponse.data){
-            if(_.get(nextProps.virtualCompetitionsResponse.data,"errorMessage")){
-                this.setState({showModal:true,modalMessage: _.get(nextProps.virtualCompetitionsResponse.data,"errorMessage")});
+        if(nextProps.productsResponse.data){
+            if(_.get(nextProps.productsResponse.data,"errorMessage")){
+                this.setState({showModal:true,modalMessage: _.get(nextProps.productsResponse.data,"errorMessage")});
             }
-        }else if(nextProps.virtualCompetitionsResponse.error){
-            this.setState({showModal:true, modalMessage: nextProps.virtualCompetitionsResponse.error.message});
+        }else if(nextProps.productsResponse.error){
+            this.setState({showModal:true, modalMessage: nextProps.productsResponse.error.message});
         }
-        if(nextProps.virtualCompetitorsResponse.creationResponse){
-            if(_.get(nextProps.virtualCompetitorsResponse.creationResponse,"success")){
-                let virtualCompetitor = nextProps.virtualCompetitorsResponse.creationResponse.data;
-                let virtualCompetitorName = virtualCompetitor.name;
-                let virtualCompetitionName = virtualCompetitor.competition.name;
-                this.setState({showModal:true,modalMessage: "The competitor: "+virtualCompetitorName+" has been created for the competition: "+virtualCompetitionName})
-            }else{
-                this.setState({showModal:true, modalMessage: _.get(nextProps.virtualCompetitorsResponse.creationResponse,"errorMessage")});
-            }
-        }else if(nextProps.virtualCompetitionsResponse.error){
-            this.setState({showModal:true, modalMessage: nextProps.virtualCompetitionsResponse.error.message})
-        }
+        // if(nextProps.virtualCompetitorsResponse.creationResponse){
+        //     if(_.get(nextProps.virtualCompetitorsResponse.creationResponse,"success")){
+        //         let virtualCompetitor = nextProps.virtualCompetitorsResponse.creationResponse.data;
+        //         let virtualCompetitorName = virtualCompetitor.name;
+        //         let virtualCompetitionName = virtualCompetitor.competition.name;
+        //         this.setState({showModal:true,modalMessage: "The competitor: "+virtualCompetitorName+" has been created for the competition: "+virtualCompetitionName})
+        //     }else{
+        //         this.setState({showModal:true, modalMessage: _.get(nextProps.virtualCompetitorsResponse.creationResponse,"errorMessage")});
+        //     }
+        // }else if(nextProps.virtualCompetitionsResponse.error){
+        //     this.setState({showModal:true, modalMessage: nextProps.virtualCompetitionsResponse.error.message})
+        // }
     }
 
     handleModalOnAfterOpen() {
@@ -95,12 +99,16 @@ class LobbySegment extends React.Component {
         this.props.dispatch(competitorApi.createVirtualCompetitor(information));
     }
 
+    selectProduct(event) {
+         
+    }
+
     render() {
         let contentNode;
-        if(this.props.virtualCompetitionsResponse){
-            if(_.get(this.props.virtualCompetitionsResponse.data,"success")){
+        if(this.props.productsResponse){
+            if(_.get(this.props.productsResponse.data,"success")){
                 //console.log("on success:"+JSON.stringify(this.props.virtualCompetitionsResponse));
-                contentNode = _.map(this.props.virtualCompetitionsResponse.data.data, (vc) => {
+                contentNode = _.map(this.props.productsResponse.data.data, (product) => {
                     let prize;
                     if(vc.prize.normalPool !== null){
                         prize = "Normal Pool: "+vc.prize.normalPool;
@@ -110,13 +118,12 @@ class LobbySegment extends React.Component {
                         prize = "Prize: Unknown";
                     }
                     return (
-                        <div id={vc.id} key={vc.id} className={s.competition_container} onClick={this.joinVirtualCompetition} >
-                            <span><h4 className={s.competition_name}>{vc.name}</h4></span>
+                        <div id={product.id} key={product.id} className={<s className="competition_container"></s>} onClick={this.selectProduct} >
+                            <span><h4 className={s.competition_name}>{product.name}</h4></span>
                             <div className={s.competitions_detailes_container}>
-                                <div className={s.competition_detail}>Secondary Name: {vc.secondaryName}</div>
-                                <div className={s.competition_detail}>Launch Date: {new Date(vc.launchDateTime).toUTCString()}</div>
-                                <div className={s.competition_detail}>Max Number of Entrants: {vc.maxNumParticipants}</div>
-                                <div className={s.competition_detail}>{prize}</div>
+                                <div className={s.competition_detail}>Starting Price: {product.startingPrice}</div>
+                                <div className={s.competition_detail}>Highest Price: {product.highestPrice}</div>
+                                <div className={s.competition_detail}>Bid End Date: {new Date(product.bidEndDate).toUTCString()}</div>
                             </div>
                         </div>
                     );

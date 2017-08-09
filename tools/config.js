@@ -9,8 +9,8 @@
  */
 
 module.exports = {
-  title: 'Crediad Games',        // Your website title
+  title: 'Antique',        // Your website title
   url: 'http://uat-wahoo.eu-west-1.elasticbeanstalk.com',          // Your website URL
-  project: 'Crediad Games',      // Firebase project. See README.md -> How to Deploy
+  project: 'Antique',      // Firebase project. See README.md -> How to Deploy
   trackingID: 'UA-XXXXX-Y',                 // Google Analytics Site's ID
 };

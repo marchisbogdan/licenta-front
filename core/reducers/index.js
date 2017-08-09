@@ -8,6 +8,7 @@ import virtualCompetitions from "./virtualCompetitionsReducer";
 import virtualCompetitors from "./virtualCompetitorsReducer";
 import players from "./playersReducer";
 import api from "./apiReducer";
+import products from './productsReducer.js';
 
 export default combineReducers({
     api,
@@ -17,5 +18,6 @@ export default combineReducers({
     countries,
     players,
     virtualCompetitions,
-    virtualCompetitors
-})
+    virtualCompetitors,
+    products,
+});
