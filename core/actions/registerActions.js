@@ -8,9 +8,9 @@ export function register(credentials) {
         dispatch(reqUtil.requestDataRegister());
 
         let requestOption = {
-            url: "/auth/subscriber/register",
+            url: "/subscriber/register",
             method: "POST",
-            baseURL: Config.wahooSubscriberApi,
+            baseURL: Config.subscriberUrl,
             headers: {
                 'Content-Type': 'application/json'
             },

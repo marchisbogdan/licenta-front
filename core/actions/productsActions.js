@@ -8,7 +8,7 @@ export function getAllProducts() {
   return function (dispatch) {
       dispatch(reqUtil.dispatchNewState(actions.REQ_PRODUCTS));
       const requestOptions = {
-          url: '/getAllProducts',
+          url: '/products/getAllProducts',
           method: 'GET',
           baseURL: Config.localhost,
           headers: {

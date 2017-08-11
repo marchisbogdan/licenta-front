@@ -50,9 +50,9 @@ export function renewToken(){
 			reject('There is no renewTokenId!');
 		} else {
 			let requestOption = {
-				url: '/auth/subscriber/renewToken',
+				url: '/subscriber/renewToken',
 				method: 'POST',
-				baseURL: Config.wahooSubscriberApi,
+				baseURL: Config.subscriberUrl,
 				headers:{
 					'ContentType': 'application/json'
 				},

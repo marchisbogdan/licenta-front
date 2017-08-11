@@ -3,24 +3,21 @@ import cx from 'classnames';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import cookie from "react-cookies";
-import {Spinner} from "react-mdl";
-import {FaArrowRight} from "react-icons/lib/fa";
-import {Button} from "react-mdl";
+import { Spinner } from "react-mdl";
+import { FaArrowRight } from "react-icons/lib/fa";
+import { Button } from "react-mdl";
 import Modal from "react-modal";
 import validator from 'validator';
 
 import Carousel from "../Carousel";
 import s from "./LobbySegment.css";
-import * as virtualCompetitionsApi from "../../core/actions/virtualCompetitionApiActions";
-import * as competitorApi from "../../core/actions/competitorApiActions";
 import * as productsApi from "../../core/actions/productsActions";
 import * as reqUtil from "../../core/actions/util/request-status-util";
 import * as actions from "../../core/actions/actionTypes.js";
+import history from "../../src/history.js";
 
 @connect((state) =>(
     {
-        virtualCompetitionsResponse: state.virtualCompetitions,
-        virtualCompetitorsResponse: state.virtualCompetitors,
         productsResponse: state.products
     }
 ))
@@ -34,14 +31,12 @@ class LobbySegment extends React.Component {
             showModal: false,
             modalMessage: "",
         };
-        this.joinVirtualCompetition = this.joinVirtualCompetition.bind(this);
         this.handleModalOnAfterOpen = this.handleModalOnAfterOpen.bind(this);
         this.handleModalOnCloseRequest = this.handleModalOnCloseRequest.bind(this);
         this.selectProduct = this.selectProduct.bind(this);
     }
 
     componentWillMount() {
-        this.props.dispatch(virtualCompetitionsApi.getVirtualCompetitions());
         this.props.dispatch(productsApi.getAllProducts());
     }
 
@@ -78,29 +73,20 @@ class LobbySegment extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.dispatch(reqUtil.dispatchNewState(actions.RESET_VIRTUAL_COMPETITOR_REGISTER));
-    }
-
-    joinVirtualCompetition(event){
-        event.preventDefault();
-        let name = prompt("Choose a name for the Competitor.");
-        if(name == null){
-            this.setState({showModal:true, modalMessage:"The name must not be empty!"});
-            return;
-        }
-        if(validator.isEmpty(name) || !validator.isAlphanumeric(name)){
-            this.setState({showModal:true, modalMessage:"The name must contain only letters and numbers!"});
-            return;
-        }
-        let information = {
-            virtualCompetitionId: event.currentTarget.id,
-            name: name
-        };
-        this.props.dispatch(competitorApi.createVirtualCompetitor(information));
+        //this.props.dispatch(reqUtil.dispatchNewState(actions.RESET_VIRTUAL_COMPETITOR_REGISTER));
     }
 
     selectProduct(event) {
-         
+        event.preventDefault();
+        let productId = event.currentTarget.id;
+        //let competitionId= this.props.virtualCompetitorsResponse.data.competitors[competitorId].competition;
+        history.push({
+            pathname: "/product",
+            search: '',
+            state: {
+                productId: productId,
+            }
+        });
     }
 
     render() {
@@ -109,14 +95,6 @@ class LobbySegment extends React.Component {
             if(_.get(this.props.productsResponse.data,"success")){
                 //console.log("on success:"+JSON.stringify(this.props.virtualCompetitionsResponse));
                 contentNode = _.map(this.props.productsResponse.data.data, (product) => {
-                    let prize;
-                    if(vc.prize.normalPool !== null){
-                        prize = "Normal Pool: "+vc.prize.normalPool;
-                    }else if(vc.prize.sponsorName !== null){
-                        prize = "Sponsor: "+vc.prize.sponsorName;
-                    }else{
-                        prize = "Prize: Unknown";
-                    }
                     return (
                         <div id={product.id} key={product.id} className={<s className="competition_container"></s>} onClick={this.selectProduct} >
                             <span><h4 className={s.competition_name}>{product.name}</h4></span>
@@ -140,7 +118,7 @@ class LobbySegment extends React.Component {
                     {contentNode}
                 </div>
                 <div className={s.spinnerContainer}>
-                    {this.props.virtualCompetitionsResponse.isLoading && <Spinner singleColor/>}
+                    {this.props.productsResponse.isLoading && <Spinner singleColor/>}
                 </div>
                 <Modal
                     isOpen={this.state.showModal}

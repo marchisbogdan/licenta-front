@@ -10,7 +10,7 @@ export function passwordRecover(email) {
       let requestOption ={
         url: '/subscriber/password-recovery',
         method: 'POST',
-        baseURL: Config.wahooSubscriberApi,
+        baseURL: Config.subscriberUrl,
         headers: {
             'Content-Type': 'application/json'
         },

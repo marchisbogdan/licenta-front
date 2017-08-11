@@ -10,9 +10,9 @@ export function authUser(username, password) {
     dispatch(reqUtil.requestDataAuth());
 
     let requestOption = {
-      url: '/auth/subscriber/login',
+      url: '/subscriber/login',
       method: 'POST',
-      baseURL: Config.wahooSubscriberApi,
+      baseURL: Config.subscriberUrl,
       headers: {
         'Content-Type': 'application/json'
       },  
