@@ -32,7 +32,7 @@ class LobbyHeader extends React.Component {
         <header className={`mdl-layout__header mdl-layout__header--scroll ${s.header}`}>
           <div className={`mdl-layout__header-row ${s.row}`}>
             <Link className={`mdl-layout-title ${s.title}`} to="/">
-              Crediad Games
+              Antique
             </Link>
 
             <div className="mdl-layout-spacer"></div>
