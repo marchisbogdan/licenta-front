@@ -10,6 +10,26 @@
 
 .content {
   margin: 0 auto;
+  opacity: 1;
   max-width: 1000px;
   width: 100%;
+  background: silver;
+  opacity: 0.8;
+}
+.mainContent {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+.mainContent:after {
+  content: "";
+  opacity: 0.8;
+  background-image: url(https://s-media-cache-ak0.pinimg.com/736x/07/c9/30/07c9306fff14437813eda1a711f16a9a--vintage-furniture-wedding-wedding-vintage.jpg);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;  
 }
