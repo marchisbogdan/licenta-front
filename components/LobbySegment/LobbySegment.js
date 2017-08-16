@@ -96,11 +96,14 @@ class LobbySegment extends React.Component {
                 //console.log("on success:"+JSON.stringify(this.props.virtualCompetitionsResponse));
                 contentNode = _.map(this.props.productsResponse.data.data, (product) => {
                     return (
-                        <div id={product.id} key={product.id} className={<s className="competition_container"></s>} onClick={this.selectProduct} >
-                            <span><h4 className={s.competition_name}>{product.name}</h4></span>
-                            <div className={s.competitions_detailes_container}>
-                                <div className={s.competition_detail}>Starting Price: {product.startingPrice}</div>
-                                <div className={s.competition_detail}>Highest Price: {product.highestPrice}</div>
+                        <div id={product.id} key={product.id} className={s.product_container} onClick={this.selectProduct} >
+                            <div className={s.product_detailes_container}>
+                                <div className={s.product_image}>
+                                    <img src={product.imageURL} />
+                                </div>
+                                <span><h4 className={s.competition_name}>{product.name}</h4></span>
+                                <div className={s.competition_detail}>Starting Price: <b>{product.startingPrice}</b></div>
+                                <div className={s.competition_detail}>Highest Bid: <b>{product.highestPrice}</b></div>
                                 <div className={s.competition_detail}>Bid End Date: {new Date(product.bidEndDate).toUTCString()}</div>
                             </div>
                         </div>

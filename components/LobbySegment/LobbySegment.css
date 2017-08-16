@@ -23,8 +23,8 @@
         align-content: space-between;
         padding: 10px 0px;
     }
-    .competition_detail{
-        
+    .product_detailes_container{
+        padding: 10px 10px;
     }
     .informationModal , .informationModal_after_open , .informationModal_before_close{
     position: absolute;
@@ -60,17 +60,17 @@
         padding: 16px 16px;
         margin: 0 0;
     }
-    .competitions_detailes_container{
-        display: flex;
-        justify-content: space-around;
-        align-content: space-between;
-        padding: 10px 0px;
+    .product_detailes_container{
+        height: 400px;
+        width: 200px;
+
+        padding: 10px 10px;
     }
     .competition_detail{
 
     }
     .overview :hover{
-        background: #E4E4E4;
+        background: #949494;
     }
     .informationModal , .informationModal_after_open , .informationModal_before_close{
     position: absolute;
@@ -87,6 +87,24 @@
     }
 }
 
+.overview {
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+}
+
+.product_image{
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+    height: 150px;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+}
 .spinnerContainer {
     display: flex;
     text-align: center;
@@ -97,6 +115,10 @@
 }
 
 .competition_container{
+    border-bottom: 1px solid black;
+}
+
+.product_container {
     border-bottom: 1px solid black;
 }
 
