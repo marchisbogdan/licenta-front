@@ -6,7 +6,7 @@ import SignUp from '../../components/SignUp';
 import LobbyLayout from '../../components/LobbyLayout';
 import EntriesSegment from '../../components/EntriesSegment';
 import history from "../../src/history";
-import {ensureSessionExists} from "../../core/sessionManager.js";
+import {ensureSessionExists,getSessionToken} from "../../core/sessionManager.js";
 import LobbyFooter from '../../components/LobbyLayout/LobbyFooter.js';
 
 class EntriesPage extends React.Component{
@@ -23,11 +23,20 @@ class EntriesPage extends React.Component{
 
   componentWillMount() {
     document.title = pageConfig.title;
-    ensureSessionExists().then( () => {
+    // ensureSessionExists().then( () => {
+    //   console.log("Session exists!");
+    //   this.setState({isLoggedIn: true});
+    // }).catch( () => {
+    //    console.log("Session doesn't exists!");
+    //   history.push("./sign-in");
+    // })
+    if(getSessionToken()) {
+      console.log("Session exists!");
       this.setState({isLoggedIn: true});
-    }).catch( () => {
+    } else {
+      console.log("Session doesn't exists!");
       history.push("./sign-in");
-    })
+    }
   }
 
   render() {

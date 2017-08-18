@@ -5,18 +5,18 @@ import _ from 'lodash';
 import cookie from "react-cookies";
 import {Spinner} from "react-mdl";
 import {FaArrowRight} from "react-icons/lib/fa";
-import {Button} from "react-mdl";
+import {Button, List, ListItem, ListItemContent, Textfield } from "react-mdl";
 import Modal from "react-modal";
 import validator from 'validator';
 
 import history from "../../src/history";
 import Carousel from "../Carousel";
 import s from "./EntriesSegment.css";
-import * as competitorApi from "../../core/actions/competitorApiActions";
+import * as productsApi from "../../core/actions/productsActions";
 
 @connect((state) =>(
     {
-        virtualCompetitorsResponse: state.virtualCompetitors
+        productsResponse: state.products
     }
 ))
 
@@ -24,18 +24,19 @@ class EntriesSegment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataLoaded: false,
             iconsSize: 24,
             showModal: false,
             modalMessage: "",
+            commentContent: "",
+            commentContentError: "",
         };
-        this.goToTeamCreationPage = this.goToTeamCreationPage.bind(this);
         this.handleModalOnAfterOpen = this.handleModalOnAfterOpen.bind(this);
         this.handleModalOnCloseRequest = this.handleModalOnCloseRequest.bind(this);
     }
 
     componentWillMount() {
-        this.props.dispatch(competitorApi.getVirtualCompetitorsBySubscriber());
+        // this.props.dispatch(competitorApi.getVirtualCompetitorsBySubscriber());
+        console.log("histry:"+history.location);
     }
 
     componentWillReceiveProps(nextProps) {  
@@ -58,54 +59,78 @@ class EntriesSegment extends React.Component {
         this.setState({modalMessage: "",showModal:false});
     }
 
-    goToTeamCreationPage(event){
-        event.preventDefault();
-        //give a state to this path including the competition id
-        let competitorId = event.currentTarget.id;
-        let competitionId= this.props.virtualCompetitorsResponse.data.competitors[competitorId].competition;
-        history.push({
-            pathname: "/team",
-            search: '',
-            state: {
-                competitionId: competitionId,
-                competitorId: competitorId
-            }
+    handleCommentChange = (event) => {
+        this.setState({
+            commentContent: event.target.value,
+            commentContentError: ""
         });
     }
 
     render() {
         let contentNode;
-        if(this.props.virtualCompetitorsResponse){
-            if(_.get(this.props.virtualCompetitorsResponse.data,"success")){
+        if(this.props.productsResponse){
+            console.log("In!!");
+            if(_.get(this.props.productsResponse.data,"success")){
                 //console.log("on success:"+JSON.stringify(this.props.virtualCompetitorsResponse));
-                let competitions = this.props.virtualCompetitorsResponse.data.virtualCompetitions;
-                contentNode = _.map(this.props.virtualCompetitorsResponse.data.competitors, (competitor) => {
-                    let prize;
-                    let {competition} = competitor;
-                    let virtualCompetition = competitions[competition];
+                const products = this.props.productsResponse.data.data;
+                const { productId } = history.location.state;
+                const product = _.find(products, { id: productId });
+                console.log("In!! :"+productId+ " prod Id:"+product.id);
 
-                    if(virtualCompetition.prize.normalPool !== null){
-                        prize = "Normal Pool: "+virtualCompetition.prize.normalPool;
-                    }else if(virtualCompetition.prize.sponsorName !== null){
-                        prize = "Sponsor: "+virtualCompetition.competition.sponsorName;
-                    }else{
-                        prize = "Prize: Unknown";
-                    }
-                    return (
-                        <div id={competitor.id} key={competitor.id} className={s.competition_container} onClick={this.goToTeamCreationPage}>
-                            <div className={s.competitions_detailes_container}>
-                                <div className={s.competition_detail}><h5 className={s.competition_name}>Competitor: {competitor.name}</h5></div>
-                                <div className={s.competition_detail}><h5 className={s.competition_name}>Competition: {virtualCompetition.name}</h5></div>
+                 
+                const fun = () => {
+                    const comments = _.map(product.comments, (comment) => {
+                        const credentials = `${comment.subscriber.userName} - at date: ${new Date(comment.creationDate)}`;
+                        console.log("credentials:"+credentials);
+                        // <ListItem threeLine key={comment.id}>
+                        //     <ListItemContent avatar="person" subtitle="John">hello</ListItemContent>
+                        // </ListItem>
+                        return (
+                            <div key={comment.id} className={s.comment_container}>
+                                <div className={s.comment_detailes}>{credentials}</div>
+                                <div className={s.comment_detailes}>{comment.content}</div>
                             </div>
-                            <div className={s.competitions_detailes_container}>
-                                <div className={s.competition_detail}>Secondary Name: {virtualCompetition.secondaryName}</div>
-                                <div className={s.competition_detail}>Launch Date: {new Date(virtualCompetition.launchDateTime).toUTCString()}</div>
-                                <div className={s.competition_detail}>Max Number of Entrants: {virtualCompetition.maxNumParticipants}</div>
-                                <div className={s.competition_detail}>{prize}</div>
+                        );
+                    });
+                    console.log("comments:"+comments[0].content);
+                    // console.log("comments:"+comments[0]);
+                    return (
+                        <div id={product.id} key={product.id} className={s.product_container}>
+                            <div className={s.product_detailes_container}>
+                                <div className={s.mega_container}>
+                                    <img src={product.imageURL} />
+                                </div>
+                                <div className={s.mega_container}>
+                                    <div className={s.details}>
+                                        <h4>Product: {product.name}</h4>
+                                        <div>Starting Price: {product.startingPrice}</div>
+                                        <div>Highest Price: {product.highestPrice}</div>
+                                        <div>Quantity: {product.quantity}</div>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={s.product_description}>
+                                <h5>Description</h5>
+                                <br/>
+                                <div>{product.description}</div>
+                            </div>
+                            <div className={s.comments_section}>
+                                {comments}
+                                <div>
+                                    <Textfield
+                                        onChange={this.handleCommentChange}
+                                        label="Comment content..."
+                                        rows={3}
+                                        style={{width: '300px'}}
+                                    />
+                                    <Button ripple>Post Comment</Button>
+                                </div>
                             </div>
                         </div>
                     );
-                })
+                }
+                contentNode = fun();
+                console.log("contentNode:"+contentNode);
             }else{
                 return (
                     <div className={s.spinnerContainer}>
@@ -125,7 +150,7 @@ class EntriesSegment extends React.Component {
                     {contentNode}
                 </div>
                 <div className={s.spinnerContainer}>
-                    {this.props.virtualCompetitorsResponse.isLoading && <Spinner singleColor/>}
+                    {this.props.productsResponse.isLoading && <Spinner singleColor/>}
                 </div>
                 <Modal
                     isOpen={this.state.showModal}

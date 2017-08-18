@@ -81,7 +81,7 @@ class LobbySegment extends React.Component {
         let productId = event.currentTarget.id;
         //let competitionId= this.props.virtualCompetitorsResponse.data.competitors[competitorId].competition;
         history.push({
-            pathname: "/product",
+            pathname: "/entries",
             search: '',
             state: {
                 productId: productId,
