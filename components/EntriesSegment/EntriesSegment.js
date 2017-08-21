@@ -32,17 +32,17 @@ class EntriesSegment extends React.Component {
         };
         this.handleModalOnAfterOpen = this.handleModalOnAfterOpen.bind(this);
         this.handleModalOnCloseRequest = this.handleModalOnCloseRequest.bind(this);
+        this.sendComment = this.sendComment.bind(this);
     }
 
     componentWillMount() {
         // this.props.dispatch(competitorApi.getVirtualCompetitorsBySubscriber());
-        console.log("histry:"+history.location);
     }
 
     componentWillReceiveProps(nextProps) {  
-        if(nextProps.virtualCompetitorsResponse){
-            if(_.get(nextProps.virtualCompetitorsResponse.creationResponse,"errorMessage")){
-                this.setState({showModal:true, modalMessage: _.get(nextProps.virtualCompetitorsResponse.creationResponse,"errorMessage")});
+        if(nextProps.productsResponse){
+            if(_.get(nextProps.productsResponse.data,"errorMessage")){
+                this.setState({showModal:true, modalMessage: _.get(nextProps.productsResponse.data,"errorMessage")});
             }
         }else if(nextProps.virtualCompetitionsResponse.error){
             this.setState({showModal:true, modalMessage: nextProps.virtualCompetitionsResponse.error.message})
@@ -66,25 +66,38 @@ class EntriesSegment extends React.Component {
         });
     }
 
+    sendComment = (event) => {
+        event.preventDefault();
+        let content = this.state.commentContent.trim();
+        let error = false;
+        content = validator.escape(content);
+        if(!content) {
+            error = true;
+            this.setState({
+                commentContentError: "The comment content is empty!",
+            })
+        }
+
+        if(error){
+            return;
+        }
+
+        const { productId } = history.location.state;
+        this.props.dispatch(productsApi.sendComment(content, productId));
+    }
+
     render() {
         let contentNode;
         if(this.props.productsResponse){
-            console.log("In!!");
             if(_.get(this.props.productsResponse.data,"success")){
                 //console.log("on success:"+JSON.stringify(this.props.virtualCompetitorsResponse));
                 const products = this.props.productsResponse.data.data;
                 const { productId } = history.location.state;
                 const product = _.find(products, { id: productId });
-                console.log("In!! :"+productId+ " prod Id:"+product.id);
 
-                 
                 const fun = () => {
                     const comments = _.map(product.comments, (comment) => {
                         const credentials = `${comment.subscriber.userName} - at date: ${new Date(comment.creationDate)}`;
-                        console.log("credentials:"+credentials);
-                        // <ListItem threeLine key={comment.id}>
-                        //     <ListItemContent avatar="person" subtitle="John">hello</ListItemContent>
-                        // </ListItem>
                         return (
                             <div key={comment.id} className={s.comment_container}>
                                 <div className={s.comment_detailes}>{credentials}</div>
@@ -92,8 +105,6 @@ class EntriesSegment extends React.Component {
                             </div>
                         );
                     });
-                    console.log("comments:"+comments[0].content);
-                    // console.log("comments:"+comments[0]);
                     return (
                         <div id={product.id} key={product.id} className={s.product_container}>
                             <div className={s.product_detailes_container}>
@@ -121,16 +132,16 @@ class EntriesSegment extends React.Component {
                                         onChange={this.handleCommentChange}
                                         label="Comment content..."
                                         rows={3}
+                                        error={this.state.commentContentError}
                                         style={{width: '300px'}}
                                     />
-                                    <Button ripple>Post Comment</Button>
+                                    <Button ripple onClick={this.sendComment}>Post Comment</Button>
                                 </div>
                             </div>
                         </div>
                     );
                 }
                 contentNode = fun();
-                console.log("contentNode:"+contentNode);
             }else{
                 return (
                     <div className={s.spinnerContainer}>
