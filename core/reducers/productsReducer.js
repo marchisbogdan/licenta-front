@@ -4,6 +4,7 @@ const initialState = {
     data:null,
     error:null,
     commentError: null,
+    productCreationError: null,
     isLoading:false,
 }
 
@@ -17,6 +18,15 @@ export default function reducer(state = initialState, action){
             return {...state, isLoading:false, error: action.data};
         case actionType.RESET_PRODUCTS:
             return {...state, isLoading:false, data: null, error: null};
+        case actionType.SEND_PRODUCT_CREATION_DATA:
+            return {...state, isLoading:true};
+        case actionType.RECV_PRODUCT_CREATION_DATA:
+            let products = state.data.data;
+            products.push(action.data.data);
+            const newCollection = {'errorMessage':state.data.errorMessage,'success':state.data.success,'data':products};
+            return {...state, isLoading:false, data:newCollection, productCreationError:null};
+        case actionType.RECV_PRODUCT_CREATION_ERROR:
+            return {...state, isLoading:false, productCreationError: action.data};
         case actionType.SEND_COMMENT_CONTENT:
             return {...state, isLoading:true};
         case actionType.RECV_COMMENT_ERROR:

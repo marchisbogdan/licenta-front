@@ -1,0 +1,175 @@
+@media only screen and (max-width: 768px){
+    .content {
+        padding: 0 0;
+        font-size: 12px;
+    }
+    .pathName{
+        display: flex;
+        width: 100%;
+        height: 30px;
+        background: #4E41B7;
+        color: #C1BDDB;
+        justify-content: center;
+        align-items: center;
+        line-height: 30px;
+        font-size: 18px;
+    }
+    .competition_name{
+        padding: 0px 8px;
+    }
+    .competitions_detailes_container{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-between;
+        padding: 10px 0px;
+    }
+    .competition_detail{
+        
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 100px;
+    left                       : 10px;
+    right                      : 10px;
+    bottom                     : 10px;
+    border                     : 1px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 300px;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .content {
+        padding: 0 0;
+    }
+    .pathName{
+        display: flex;
+        width: 100%;
+        height: 50px;
+        background: #4E41B7;
+        color: #C1BDDB;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-size: 21px;
+    }
+    .competition_name{
+        padding: 0px 16px;
+    }
+    .competitions_detailes_container{
+        display: flex;
+        justify-content: space-around;
+        align-content: space-between;
+        padding: 10px 0px;
+    }
+    .competition_detail{
+
+    }
+    .competition_container:hover{
+        background: #DBDBDB;
+    }
+    .informationModal , .informationModal_after_open , .informationModal_before_close{
+    position: absolute;
+    top                        : 200px;
+    left                       : 40px;
+    right                      : 40px;
+    bottom                     : 40px;
+    border                     : 3px solid #E92525;
+    background                 : #fff;
+    overflow                   : auto;
+    outline                    : none;
+    padding                    : 20px;
+    height: 400px;
+    }
+}
+
+.spinnerContainer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.competition_container{
+    border-bottom: 1px solid black;
+}
+
+.informationOverlayModal, .informationOverlayModal_after_open , .informationOverlayModal_before_close{
+    position          : fixed;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color   : #3B4DC6;
+    z-index: 1;
+    transition: width 2s, height 4s;
+    animation: fadeinout 5s linear forwards;
+}
+
+.product_container{
+    width: 100%;
+    padding: 25px 50px;
+    background: white;
+    color: black;
+}
+
+.comment_container {
+    width: 100%;
+    box-shadow: 0 2px 10px 1px ;
+}
+
+.comment_detailes {
+    padding: 10px 10px 5px 10px;
+    font: 16px;
+}
+
+.product_detailes_container{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+    height: 300px;
+}
+
+.mega_container > img {
+    width:250px;
+    height:250px;
+    box-shadow: 0 0 5px 3px black;
+}
+
+.mega_container{
+    align-self: center;
+}
+
+.details{
+    width: 300px;
+    height:200px;
+    text-align: right;
+    font-size: 18px;
+    color: darkblue;
+    padding: 5px 20px;
+    box-shadow: 0 -2px 10px 5px darkgray inset;
+}
+
+.product_description{
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+    padding: 0 10px;
+    box-shadow: 0 4px 1px 0 black;
+}
+
+.comments_section{
+    width: 100%;
+    padding: 10px 10px;
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  25%,50%,75% { opacity: 1 };
+}

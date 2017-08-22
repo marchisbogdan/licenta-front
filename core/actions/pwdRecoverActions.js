@@ -14,7 +14,7 @@ export function passwordRecover(email) {
         headers: {
             'Content-Type': 'application/json'
         },
-        data: {
+        params: {
             email: email
         }
       };

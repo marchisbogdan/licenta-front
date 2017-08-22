@@ -45,11 +45,11 @@ class LobbyFooter extends React.Component {
     }
   }
   render(){
-    let activeLobby = '', activeEntries = '', activeFriends = '', activeNotifications = '';
+    let activeLobby = '', activeEntries = '', activeAdminTools = '', activeNotifications = '';
     console.log('location.pathname:'+JSON.stringify(location));
     location.pathname.includes("/lobby") || location.hash.includes("lobby") ? activeLobby += s.active : false;
     location.pathname.includes("/entries") || location.hash.includes("entries") ? activeEntries += s.active : false;
-    location.pathname.includes("/friends") || location.hash.includes("friends") ? activeFriends += s.active : false;
+    location.pathname.includes("/adminTools") || location.hash.includes("adminTools") ? activeAdminTools+= s.active : false;
     location.pathname.includes("/notifications") || location.hash.includes("notifications") ? activeNotifications += s.active : false;
 
     return (
@@ -74,9 +74,9 @@ class LobbyFooter extends React.Component {
             </Link>
           </div> 
           <div className={cx(s.lobbyOptions,s.item)}>
-            <Link className={cx(s.link,activeFriends)} to="/lobby">
+            <Link className={cx(s.link,activeAdminTools)} to="/adminTools">
               <FaGroup size={this.state.iconsSize}/>
-              <div className={s.hide_text}>Friends</div>
+              <div className={s.hide_text}>Admin Tools</div>
             </Link>
           </div> 
           <div className={cx(s.lobbyOptions,s.item)}>

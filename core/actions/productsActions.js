@@ -66,3 +66,31 @@ export function getProductById(productId) {
         });
     }
 }
+
+export function createProduct(productDetails){
+    return function (dispatch) {
+        dispatch(reqUtil.dispatchNewState(actions.SEND_PRODUCT_CREATION_DATA));
+        const requestOptions = {
+            url: '/products/product',
+            method: 'POST',
+            baseURL: Config.localhost,
+            headers: {
+                'Content-type': 'application/json',
+            },
+            data: {
+                name: productDetails.name,
+                description: productDetails.description,
+                imageURL: productDetails.imageURL,
+                bidEndDate: productDetails.bidEndDate,
+                startingPrice: productDetails.startingPrice,
+                highestPrice: 0,
+                quantity: productDetails.quantity,
+            }
+        }
+        reqUtil.sendRequest(requestOptions).then((response) => {
+            dispatch(reqUtil.dispatchNewState(actions.RECV_PRODUCT_CREATION_DATA, response.data));
+        }).catch((error) => {
+            dispatch(reqUtil.dispatchNewState(actions.RECV_PRODUCT_CREATION_ERROR, error.response || error));
+        });
+    }
+}

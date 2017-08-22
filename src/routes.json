@@ -43,5 +43,9 @@
   {
     "path": "/team",
     "page": "./team"
+  },
+  {
+    "path": "/adminTools",
+    "page": "./adminTools"
   }
 ]
