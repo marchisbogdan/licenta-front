@@ -48,6 +48,55 @@ export function sendComment(content,productId) {
     }
 }
 
+export function deleteProduct(productId){
+    return function(dispatch) {
+        dispatch(reqUtil.dispatchNewState(actions.REQ_PRODUCT_DELETE));
+        const requestOptions = {
+            url: 'products/product/id/'+productId,
+            method: 'DELETE',
+            baseURL: Config.localhost,
+            headers: {
+                'Content-type': 'application/json',
+            }
+        }
+        reqUtil.sendRequest(requestOptions).then((response) => {
+            response.data.productId = productId;
+            dispatch(reqUtil.dispatchNewState(actions.RECV_PRODUCT_DELETE_DATA, response.data));
+        }).catch((error) => {
+            dispatch(reqUtil.dispatchNewState(actions.RECV_PRODUCT_DELETE_ERROR, error.response || error));
+        });
+    }
+}
+
+export function bidOnProduct(productId,bidValue){
+    return function(dispatch) {
+        dispatch(reqUtil.dispatchNewState(actions.SEND_BID));
+        const requestOptions = {
+            url: '/products/bid',
+            method: 'POST',
+            baseURL: Config.localhost,
+            headers: {
+                'Content-type': 'application/json',
+            },
+            data: {
+                "idProduct": productId,
+                "bidValue": bidValue,
+            }
+        }
+        reqUtil.sendRequest(requestOptions).then((response) => {
+            dispatch(reqUtil.dispatchNewState(actions.RECV_BID_SUCCESS, response.data));
+        }).catch((error) => {
+            dispatch(reqUtil.dispatchNewState(actions.RECV_BID_ERROR, error.response || error));
+        });
+    }
+}
+
+export function resetBids(){
+    return function (dispatch) {
+         dispatch(reqUtil.dispatchNewState(actions.RESET_BIDS));
+    }
+}
+
 export function getProductById(productId) {
     return function (dispatch) {
         dispatch(reqUtil.dispatchNewState(actions.REQ_PRODUCTS));
@@ -59,7 +108,7 @@ export function getProductById(productId) {
                 'Content-type': 'application/json',
             }
         }
-        reqUtil.sendRequest(requestOptions).then((response)=> {
+        reqUtil.sendRequest(requestOptions).then((response) => {
             dispatch(reqUtil.dispatchNewState(actions.RECV_PRODUCT_DATA, response.data));
         }).catch((error) => {
             dispatch(reqUtil.dispatchNewState(actions.RECV_PRODUCTS_ERROR, error.response || error));

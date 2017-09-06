@@ -5,12 +5,15 @@ const initialState = {
     error:null,
     commentError: null,
     productCreationError: null,
+    deleteError: null,
     isLoading:false,
 }
 
 export default function reducer(state = initialState, action){
     switch (action.type) {
         case actionType.REQ_PRODUCTS:
+            return {...state, isLoading: true};
+        case actionType.REQ_PRODUCT_DELETE:
             return {...state, isLoading: true};
         case actionType.RECV_PRODUCTS_DATA:
             return {...state, isLoading:false, data: action.data};
@@ -50,6 +53,10 @@ export default function reducer(state = initialState, action){
             const newDataArray = state.data.data.slice(0,index).concat(product).concat(state.data.data.slice(index+1));
             const newData = {'errorMessage':state.data.errorMessage,'success':state.data.success,'data':newDataArray};
             return {...state, isLoading:false, data:newData, error:null};
+        case actionType.RECV_PRODUCT_DELETE_DATA:
+            
+        case actionType.RECV_PRODUCT_DELETE_ERROR:
+            return {...state, isLoading:false, deleteError: action.data};
         default:
             return state;
     }

@@ -5,7 +5,7 @@ import _ from 'lodash';
 import cookie from 'react-cookies';
 import { Spinner } from 'react-mdl';
 import { FaArrowRight } from 'react-icons/lib/fa';
-import { Button, List, ListItem, ListItemContent, Textfield } from 'react-mdl';
+import { Button, List, ListItem, ListItemContent, Textfield, DataTable, TableHeader} from 'react-mdl';
 import Modal from 'react-modal';
 import validator from 'validator';
 
@@ -40,11 +40,11 @@ class AdminTools extends React.Component {
             startingPriceError: "",
             quantity: "",
             quantityError: "",
-
+            idOfProductToChange:"",
         };
         this.handleModalOnAfterOpen = this.handleModalOnAfterOpen.bind(this);
         this.handleModalOnCloseRequest = this.handleModalOnCloseRequest.bind(this);
-        
+        this.selectionChanged = this.selectionChanged.bind(this);
     }
 
     componentWillMount() {
@@ -111,6 +111,17 @@ class AdminTools extends React.Component {
             quantity: event.target.value,
             quantityError: ""
         })
+    }
+
+    selectionChanged = (event) => {
+        console.log("event:"+JSON.stringify(event));
+        console.log("event simple:"+event);
+        const id = event.toString().split(",")[0];
+        if(id != null){
+            this.setState({idOfProductToChange:id });
+        }else{
+            this.setState({idOfProductToChange:"" });
+        }
     }
 
     handleSubmit = (event) => {
@@ -201,52 +212,125 @@ class AdminTools extends React.Component {
         this.props.dispatch(productActions.createProduct(productDetails));
     }
 
+    handleDelete = (event) => {
+        event.preventDefault();
+        const product = _.find(this.props.productsResponse.data.data,{id:this.state.idOfProductToChange});
+        console.log("deleting product with id:"+this.state.idOfProductToChange+" and name:"+product.name);
+    }
+
+    handleUpdate = (event) => {
+        event.preventDefault();
+        const product = _.find(this.props.productsResponse.data.data,{id:this.state.idOfProductToChange});
+        console.log("Updating product with id:"+this.state.idOfProductToChange+" and name:"+product.name);
+    }
+
      render() {
-        let contentNode = <h1> Admin </h1>
+        let contentNode = _.map(this.props.productsResponse.data.data, (product) => {
+                    let date = new Date(product.bidEndDate).toUTCString();
+                    let listItem = {id:product.id,name:product.name,bidEndDate:date,quantity:product.quantity};
+                    if(product.highestPrice > 0){
+                        listItem.bidedOn = "True";
+                    }else{
+                        listItem.bidedOn = "False";
+                    }
+                    return listItem;
+                    // return (
+                    //     <div id={product.id} key={product.id} className={s.product_container} onClick={this.selectProduct} >
+                    //         <div className={s.product_detailes_container}>
+                    //             <div className={s.product_image}>
+                    //                 <img src={product.imageURL} />
+                    //             </div>
+                    //             <span><h4 className={s.competition_name}>{product.name}</h4></span>
+                    //             <div className={s.competition_detail}>Starting Price: <b>{product.startingPrice}</b></div>
+                    //             <div className={s.competition_detail}>Highest Bid: <b>{product.highestPrice}</b></div>
+                    //             <div className={s.competition_detail}>Bid End Date: {new Date(product.bidEndDate).toUTCString()}</div>
+                    //         </div>
+                    //     </div>
+                    // );
+                })
         return (
             <div className={s.content}>
-                <Carousel />
                 <div className={s.pathName}>Admin Tools</div>
                 <div className={s.overview}>
-                    {contentNode}
-                    <div>Product Creation</div>
+                    <div className={s.textField}>
+                    <h3>Product Creation</h3>
+                    </div>
+                    <div className={s.textField}>
                     <Textfield
                         onChange={this.handleNameInputChange}
                         label="Name"
+                        floatingLabel
                         error={this.state.nameError}
                         style={{width: '300px'}}
+                        value={this.state.idd}
                     />
+                    </div>
+                    <div className={s.textField}>                    
                     <Textfield
                         onChange={this.handleDescriptionInputChange}
                         label="Description"
+                        floatingLabel
                         error={this.state.descriptionError}
                         style={{width: '300px'}}
                     />
+                    </div>
+                    <div className={s.textField}>                    
                     <Textfield
                         onChange={this.handleImageURLInputChange}
                         label="ImageURL"
+                        floatingLabel
                         error={this.state.imageURLError}
                         style={{width: '300px'}}
                     />
+                    </div>
+                    <div className={s.textField}>                    
                     <Textfield
                         onChange={this.handleBidEndDateInputChange}
                         label="Bid End Date"
+                        floatingLabel
                         error={this.state.bidEndDateError}
                         style={{width: '300px'}}
                     />
+                    </div>
+                    <div className={s.textField}>                    
                     <Textfield
                         onChange={this.handleStartingPriceInputChange}
                         label="Starting price"
+                        floatingLabel
                         error={this.state.startingPriceError}
                         style={{width: '300px'}}
                     />
+                    </div>
+                    <div className={s.textField}>                    
                     <Textfield
                         onChange={this.handleQuantityInputChange}
                         label="Quantity"
+                        floatingLabel
                         error={this.state.quantityError}
                         style={{width: '300px'}}
                     />
+                    </div>
+                    <div className={s.textField}>                    
                     <Button ripple onClick={this.handleSubmit}>Submit</Button>
+                    <Button ripple onClick={this.handleDelete}>Delete</Button>
+                    <Button ripple onClick={this.handleUpdate}>Update</Button>
+                    </div>
+                </div>
+                <div className={s.dataCenter}>
+                <div className={s.dataCenterAlign}>
+                <DataTable
+                    selectable
+                    shadow={0}
+                    rowKeyColumn="id"
+                    onSelectionChanged={this.selectionChanged}
+                    rows={contentNode}
+                >
+                    <TableHeader name="name" tooltip="Product name">Name</TableHeader>
+                    <TableHeader name="bidEndDate" tooltip="Product bid end date">Bid end date</TableHeader>
+                    <TableHeader numeric name="quantity" tooltip="Number of materials">Quantity</TableHeader>
+                    <TableHeader name="bidedOn" tooltip="Bids made on product">Bids Made</TableHeader>
+                </DataTable>
+                </div>
                 </div>
                 <div className={s.spinnerContainer}>
                     {this.props.productsResponse.isLoading && <Spinner singleColor/>}

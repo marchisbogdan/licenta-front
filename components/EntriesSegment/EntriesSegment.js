@@ -16,7 +16,8 @@ import * as productsApi from "../../core/actions/productsActions";
 
 @connect((state) =>(
     {
-        productsResponse: state.products
+        productsResponse: state.products,
+        bidsResponse: state.bids,
     }
 ))
 
@@ -33,6 +34,7 @@ class EntriesSegment extends React.Component {
         this.handleModalOnAfterOpen = this.handleModalOnAfterOpen.bind(this);
         this.handleModalOnCloseRequest = this.handleModalOnCloseRequest.bind(this);
         this.sendComment = this.sendComment.bind(this);
+        this.bidOnProduct = this.bidOnProduct.bind(this);
     }
 
     componentWillMount() {
@@ -44,8 +46,17 @@ class EntriesSegment extends React.Component {
             if(_.get(nextProps.productsResponse.data,"errorMessage")){
                 this.setState({showModal:true, modalMessage: _.get(nextProps.productsResponse.data,"errorMessage")});
             }
-        }else if(nextProps.virtualCompetitionsResponse.error){
-            this.setState({showModal:true, modalMessage: nextProps.virtualCompetitionsResponse.error.message})
+        }
+        if(nextProps.bidsResponse){
+            if(_.get(nextProps.bidsResponse.data,"errorMessage")){
+                this.setState({showModal:true, modalMessage: _.get(nextProps.bidsResponse.data,"errorMessage")});
+            }else{
+                if(_.get(nextProps.bidsResponse.data, "success")){
+                    this.setState({showModal:true, modalMessage: "Bid has been set!"});
+                    this.props.dispatch(productsApi.resetBids());
+                    this.props.dispatch(productsApi.getAllProducts());
+                }
+            }
         }
     }
 
@@ -86,6 +97,23 @@ class EntriesSegment extends React.Component {
         this.props.dispatch(productsApi.sendComment(content, productId));
     }
 
+    bidOnProduct = (event) => {
+        event.preventDefault();
+        const { productId } = history.location.state;
+        const bidValue = prompt("Bid a sum of money for the selected product.");
+        console.log("Bid value:"+bidValue);
+        if(validator.isDecimal(bidValue)){
+             const product = _.find(this.props.productsResponse.data.data, { id: productId });
+             if(product.highestPrice >= bidValue) {
+                 this.setState({modalMessage: "The bid value must be larger then the highest price.",showModal:true});
+             }else{
+                 this.props.dispatch(productsApi.bidOnProduct(productId,bidValue));
+             }
+        }else{
+            this.setState({modalMessage: "The value you have inserted is not a valid number.",showModal:true});
+        }
+    }
+
     render() {
         let contentNode;
         if(this.props.productsResponse){
@@ -115,8 +143,10 @@ class EntriesSegment extends React.Component {
                                     <div className={s.details}>
                                         <h4>Product: {product.name}</h4>
                                         <div>Starting Price: {product.startingPrice}</div>
-                                        <div>Highest Price: {product.highestPrice}</div>
+                                        <div>Highest Bid: {product.highestPrice}</div>
                                         <div>Quantity: {product.quantity}</div>    
+                                        <br/>
+                                        <Button raised ripple colored onClick={this.bidOnProduct}>Bid</Button>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +165,7 @@ class EntriesSegment extends React.Component {
                                         error={this.state.commentContentError}
                                         style={{width: '300px'}}
                                     />
-                                    <Button ripple onClick={this.sendComment}>Post Comment</Button>
+                                    <Button raised ripple onClick={this.sendComment}>Post Comment</Button>
                                 </div>
                             </div>
                         </div>
